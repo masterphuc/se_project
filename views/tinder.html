@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        #container {
+            width: 500px;
+            margin: auto !important;
+            display: block;
+            height: 500px;
+            position: relative;
+            list-style-type: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        .buddy {
+            display: none;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            color: #fff;
+            padding: 20px;
+            width: 360px;
+            height: 360px;
+            position: absolute;
+            cursor: hand;
+        }
+        
+        .rotate-left {
+            transform: rotate(30deg) scale(0.8);
+            transition: 1s;
+            margin-left: 400px;
+            cursor: e-resize;
+            opacity: 0;
+            z-index: 10;
+        }
+        
+        .rotate-right {
+            transform: rotate(-30deg) scale(0.8);
+            transition: 1s;
+            opacity: 0;
+            margin-left: -400px;
+            cursor: w-resize;
+            z-index: 10;
+        }
+        
+        .avatar {
+            background: #222;
+            width: 340px;
+            height: 340px;
+            display: block;
+            margin-top: 10px;
+            margin-left: 10px;
+            background-size: auto 160% !important;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .like {
+            border-radius: 5px;
+            padding: 5px 10px;
+            border: 2px solid green;
+            color: green;
+            text-transform: uppercase;
+            font-size: 15px;
+            position: absolute;
+            top: 50px;
+            right: 40px;
+            text-shadow: none;
+        }
+        
+        .dislike {
+            border-radius: 5px;
+            padding: 5px 10px;
+            border: 2px solid red;
+            color: red;
+            text-transform: uppercase;
+            font-size: 15px;
+            position: absolute;
+            top: 50px;
+            left: 40px;
+            text-shadow: none;
+        }
+
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
+</head>
+
+<body>
+    <div id="user" style="    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 20%;">
+        <input id="username" type="text" placeholder="Username">
+        <button id="go">Go</button>
+        <script>
+
+
+        </script>
+    </div>
+    <div id="container" style="display: none">
+        <div class="buddy" style="display: block;">
+            <div class="avatar" id="ava1" style="display: block;"></div>
+        </div>
+        <div class="buddy">
+            <div class="avatar" id="ava2" style="display: block;"></div>
+        </div>
+        <div class="buddy">
+            <div class="avatar" id="ava3" style="display: block; background-image: url(http://w1nd.cc/promo/347.jpg)"></div>
+        </div>
+        <!--
+        <div class="buddy">
+            <div class="avatar" style="display: block; background-image: url(http://ell.h-cdn.co/assets/cm/15/01/54a769be3112d_-_elle-rata-insta-1-24375723.png)"></div>
+        </div>
+        <div class="buddy">
+            <div class="avatar" style="display: block; background-image: url(http://hircsarda.hu/wp-content/uploads/2016/03/orban1.jpeg)"></div>
+        </div>
+-->
+    </div>
+    <script>
+        $(document).ready(function() {
+
+            var counter = 0
+            var like = 0
+            var dislike = 0
+            var username = ""
+            var tracker = "z"
+            var queue = []
+            var hold = 0
+            $("#go").on("click", function() {
+                $(".avatar").css("background-image", "url(img/tinder/0.jpg)")
+                $("#ava2").css("background-image", "url(img/tinder/1.jpg)")
+                $("#ava3").css("background-image", "url(img/tinder/2.jpg)")
+
+                username = $("#username").val()
+                console.log(username)
+                $("#container").css("display", "inline")
+                $("#user").css("display", "none")
+
+
+            })
+
+            $(".buddy").on("swiperight", function() {
+                var self = $(this)
+                //                var training = trainPositive().then()
+                if (like < 2 && dislike < 2) {
+                    var xmlHttp = new XMLHttpRequest();
+                    xmlHttp.onreadystatechange = function() {
+                        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                            console.log(xmlHttp.responseText)
+                    }
+                    xmlHttp.open("GET", "http://restapi-testcode.herokuapp.com/update/?username=" + username + "&imgIndex=" + counter + "&positive=1", true); // true for asynchronous 
+                    xmlHttp.send(null);
+
+                    if (self.children()[0].id == "ava1") {
+                        tracker = "a"
+                        temp = counter + 2 > 20 ? 1 : counter + 2
+                        $("#ava3").css("background-image", "url(img/tinder/" + temp + ".jpg)")
+                    } else if (self.children()[0].id == "ava2") {
+                        tracker = "b"
+                        temp = counter + 2 > 20 ? 2 : counter + 2
+                        $("#ava1").css("background-image", "url(img/tinder/" + temp + ".jpg)")
+
+                    } else {
+                        tracker = "c"
+                        temp = counter + 2 > 20 ? 3 : counter + 2
+                        $("#ava2").css("background-image", "url(img/tinder/" + temp + ".jpg)")
+
+                    }
+                } else {
+                    hold = queue.shift()
+                    predict()
+//                        .then(
+//                        function() {
+//                            if (tracker == "a") {
+//                                $("#ava3").css("background-image", "url(img/tinder/" + counter + ".jpg)")
+//                            }
+//                            if (tracker == "b") {
+//                                $("#ava1").css("background-image", "url(img/tinder/" + counter + ".jpg)")
+//                            }
+//                            if (tracker == "c") {
+//                                $("#ava2").css("background-image", "url(img/tinder/" + counter + ".jpg)")
+//                            }
+//                        })
+                }
+                
+                
+                
+                like++
+                if (like == 2 && dislike == 2) {
+                    predict()
+//                        .then(
+//                        function() {
+//                            if (tracker == "a") {
+//                                $("#ava3").css("background-image", "url(img/tinder/" + counter + ".jpg)")
+//                            }
+//                            if (tracker == "b") {
+//                                $("#ava1").css("background-image", "url(img/tinder/" + counter + ".jpg)")
+//                            }
+//                            if (tracker == "c") {
+//                                $("#ava2").css("background-image", "url(img/tinder/" + counter + ".jpg)")
+//                            }
+//                        })
+                }
+
+                $(this).addClass('rotate-left').delay(700).fadeOut(1);
+                $('.buddy').find('.status').remove();
+
+                $(this).append('<div class="status like">Like!</div>');
+                if ($(this).is(':last-child')) {
+                    $('.buddy:nth-child(1)').removeClass('rotate-left rotate-right').fadeIn(300);
+                } else {
+                    $(this).next().removeClass('rotate-left rotate-right').fadeIn(400);
+                }
+                counter = counter > 20 ? 1 : counter + 1
+            });
+
+            $(".buddy").on("swipeleft", function() {
+                var self = $(this)
+                if (like < 2 && dislike < 2) {
+                    var xmlHttp = new XMLHttpRequest();
+                    xmlHttp.onreadystatechange = function() {
+                        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                            console.log(xmlHttp.responseText)
+                    }
+                    xmlHttp.open("GET", "http://restapi-testcode.herokuapp.com/update/?username=" + username + "&imgIndex=" + counter + "&positive=0", true); // true for asynchronous 
+                    xmlHttp.send(null);
+                    if (self.children()[0].id == "ava1") {
+                        tracker = "a"
+                        temp = counter + 2 > 20 ? 1 : counter + 2
+                        $("#ava3").css("background-image", "url(img/tinder/" + temp + ".jpg)")
+                    } else if (self.children()[0].id == "ava2") {
+                        tracker = "b"
+                        temp = counter + 2 > 20 ? 2 : counter + 2
+                        $("#ava1").css("background-image", "url(img/tinder/" + temp + ".jpg)")
+
+                    } else {
+                        tracker = "c"
+                        temp = counter + 2 > 20 ? 3 : counter + 2
+                        $("#ava2").css("background-image", "url(img/tinder/" + temp + ".jpg)")
+
+                    }
+                } else {
+                    var temp = queue.shift()
+                    predict()
+                }
+                dislike++
+                if (like == 2 && dislike == 2) {
+                    predict()
+                }
+                
+                if ($(this).children()[0].id == "ava1") {
+                    bool1 = true
+                    temp = counter + 2 > 20 ? 1 : counter + 2
+                    $("#ava3").css("background-image", "url(img/tinder/" + temp + ".jpg)")
+                } else if ($(this).children()[0].id == "ava2") {
+                    bool2 = true
+                    temp = counter + 2 > 20 ? 2 : counter + 2
+                    $("#ava1").css("background-image", "url(img/tinder/" + temp + ".jpg)")
+
+                } else {
+                    bool3 = true
+                    temp = counter + 2 > 20 ? 3 : counter + 2
+                    $("#ava2").css("background-image", "url(img/tinder/" + temp + ".jpg)")
+
+                }
+                $(this).addClass('rotate-right').delay(700).fadeOut(1);
+                $('.buddy').find('.status').remove();
+                $(this).append('<div class="status dislike">Dislike!</div>');
+
+                if ($(this).is(':last-child')) {
+                    $('.buddy:nth-child(1)').removeClass('rotate-left rotate-right').fadeIn(300);
+                } else {
+                    $(this).next().removeClass('rotate-left rotate-right').fadeIn(400);
+                }
+                counter = counter > 20 ? 1 : counter + 1
+            });
+
+            function trainPositive(username, counter) {
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.onreadystatechange = function() {
+                    if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                        console.log(xmlHttp.responseText)
+                }
+                xmlHttp.open("GET", "http://restapi-testcode.herokuapp.com/update/?username=" + username + "&imgIndex=" + counter + "&positive=1", true); // true for asynchronous 
+                xmlHttp.send(null);
+            }
+
+            function trainNegative(username, counter) {
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.onreadystatechange = function() {
+                    if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                        console.log(xmlHttp.responseText)
+                }
+                xmlHttp.open("GET", "http://restapi-testcode.herokuapp.com/update/?username=" + username + "&imgIndex=" + counter + "&positive=0", true); // true for asynchronous 
+                xmlHttp.send(null);
+            }
+
+            function predict() {
+                counter++
+                if (queue.length < 1 && counter < 7) {
+                    var xmlHttp = new XMLHttpRequest();
+                    xmlHttp.onreadystatechange = function() {
+                        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+
+                            console.log(xmlHttp.responseText)
+                            if (xmlHttp.responseText > .2) {
+                                queue.push(counter)
+                                changePict()
+                            }
+                        } else {
+                            setTimeout(function() {
+                                predict()
+                            }, 300)
+                        }
+                    }
+                    xmlHttp.open("GET", "http://restapi-testcode.herokuapp.com/predict/?username=" + username + "&imgIndex=" + counter, true); // true for asynchronous 
+                    xmlHttp.send(null);
+                }
+            }
+            
+            function changePict(){
+                if (tracker == "a") {
+                                $("#ava3").css("background-image", "url(img/tinder/" + counter + ".jpg)")
+                            }
+                            if (tracker == "b") {
+                                $("#ava1").css("background-image", "url(img/tinder/" + counter + ".jpg)")
+                            }
+                            if (tracker == "c") {
+                                $("#ava2").css("background-image", "url(img/tinder/" + counter + ".jpg)")
+                            }
+            }
+
+
+        });
+
+    </script>
+</body>
+
+</html>
