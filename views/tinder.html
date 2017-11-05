@@ -156,7 +156,7 @@
                         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
                             console.log(xmlHttp.responseText)
                     }
-                    xmlHttp.open("GET", "http://restapi-testcode.herokuapp.com/update/?username=" + username + "&imgIndex=" + counter + "&positive=1", true); // true for asynchronous 
+                    xmlHttp.open("GET", "https://restapi-testcode.herokuapp.com/update/?username=" + username + "&imgIndex=" + counter + "&positive=1", true); // true for asynchronous 
                     xmlHttp.send(null);
 
                     if (self.children()[0].id == "ava1") {
@@ -230,7 +230,7 @@
                         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
                             console.log(xmlHttp.responseText)
                     }
-                    xmlHttp.open("GET", "http://restapi-testcode.herokuapp.com/update/?username=" + username + "&imgIndex=" + counter + "&positive=0", true); // true for asynchronous 
+                    xmlHttp.open("GET", "https://restapi-testcode.herokuapp.com/update/?username=" + username + "&imgIndex=" + counter + "&positive=0", true); // true for asynchronous 
                     xmlHttp.send(null);
                     if (self.children()[0].id == "ava1") {
                         tracker = "a"
@@ -289,7 +289,7 @@
                     if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
                         console.log(xmlHttp.responseText)
                 }
-                xmlHttp.open("GET", "http://restapi-testcode.herokuapp.com/update/?username=" + username + "&imgIndex=" + counter + "&positive=1", true); // true for asynchronous 
+                xmlHttp.open("GET", "https://restapi-testcode.herokuapp.com/update/?username=" + username + "&imgIndex=" + counter + "&positive=1", true); // true for asynchronous 
                 xmlHttp.send(null);
             }
 
@@ -299,7 +299,7 @@
                     if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
                         console.log(xmlHttp.responseText)
                 }
-                xmlHttp.open("GET", "http://restapi-testcode.herokuapp.com/update/?username=" + username + "&imgIndex=" + counter + "&positive=0", true); // true for asynchronous 
+                xmlHttp.open("GET", "https://restapi-testcode.herokuapp.com/update/?username=" + username + "&imgIndex=" + counter + "&positive=0", true); // true for asynchronous 
                 xmlHttp.send(null);
             }
 
@@ -321,7 +321,7 @@
                             }, 300)
                         }
                     }
-                    xmlHttp.open("GET", "http://restapi-testcode.herokuapp.com/predict/?username=" + username + "&imgIndex=" + counter, true); // true for asynchronous 
+                    xmlHttp.open("GET", "https://restapi-testcode.herokuapp.com/predict/?username=" + username + "&imgIndex=" + counter, true); // true for asynchronous 
                     xmlHttp.send(null);
                 }
             }
