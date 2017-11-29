@@ -177,18 +177,6 @@
                 } else {
                     hold = queue.shift()
                     predict()
-//                        .then(
-//                        function() {
-//                            if (tracker == "a") {
-//                                $("#ava3").css("background-image", "url(img/tinder/" + counter + ".jpg)")
-//                            }
-//                            if (tracker == "b") {
-//                                $("#ava1").css("background-image", "url(img/tinder/" + counter + ".jpg)")
-//                            }
-//                            if (tracker == "c") {
-//                                $("#ava2").css("background-image", "url(img/tinder/" + counter + ".jpg)")
-//                            }
-//                        })
                 }
                 
                 
@@ -196,18 +184,6 @@
                 like++
                 if (like == 2 && dislike == 2) {
                     predict()
-//                        .then(
-//                        function() {
-//                            if (tracker == "a") {
-//                                $("#ava3").css("background-image", "url(img/tinder/" + counter + ".jpg)")
-//                            }
-//                            if (tracker == "b") {
-//                                $("#ava1").css("background-image", "url(img/tinder/" + counter + ".jpg)")
-//                            }
-//                            if (tracker == "c") {
-//                                $("#ava2").css("background-image", "url(img/tinder/" + counter + ".jpg)")
-//                            }
-//                        })
                 }
 
                 $(this).addClass('rotate-left').delay(700).fadeOut(1);
@@ -229,6 +205,9 @@
                     xmlHttp.onreadystatechange = function() {
                         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
                             console.log(xmlHttp.responseText)
+                        else{
+//                            console.log("negative but failed")
+                        }
                     }
                     xmlHttp.open("GET", "https://restapi-testcode.herokuapp.com/update/?username=" + username + "&imgIndex=" + counter + "&positive=0", true); // true for asynchronous 
                     xmlHttp.send(null);
@@ -288,6 +267,9 @@
                 xmlHttp.onreadystatechange = function() {
                     if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
                         console.log(xmlHttp.responseText)
+                    else{
+//                        console.log("negative but failed")
+                    }
                 }
                 xmlHttp.open("GET", "https://restapi-testcode.herokuapp.com/update/?username=" + username + "&imgIndex=" + counter + "&positive=1", true); // true for asynchronous 
                 xmlHttp.send(null);
@@ -305,23 +287,26 @@
 
             function predict() {
                 counter++
-                if (queue.length < 1 && counter < 7) {
+                if (queue.length < 1) {
                     var xmlHttp = new XMLHttpRequest();
                     xmlHttp.onreadystatechange = function() {
+//                        console.log("predict")
                         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-
+                            console.log("success")
                             console.log(xmlHttp.responseText)
                             if (xmlHttp.responseText > .2) {
                                 queue.push(counter)
                                 changePict()
                             }
                         } else {
+//                            console.log("fail")
                             setTimeout(function() {
                                 predict()
                             }, 300)
                         }
                     }
-                    xmlHttp.open("GET", "https://restapi-testcode.herokuapp.com/predict/?username=" + username + "&imgIndex=" + counter, true); // true for asynchronous 
+                //    http://localhost:3000/tinderPredict/dfdf2/4
+                    xmlHttp.open("GET", "http://localhost:3000/tinderPredict/"+username+"/"+counter, true); // true for asynchronous 
                     xmlHttp.send(null);
                 }
             }
@@ -337,6 +322,9 @@
                                 $("#ava2").css("background-image", "url(img/tinder/" + counter + ".jpg)")
                             }
             }
+            if(counter == 5){
+                
+               }
 
 
         });

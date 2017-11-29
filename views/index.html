@@ -40,29 +40,26 @@
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href="#services">Services</a>
                     </li>
-                    <li class="nav-item">
+                    <li id="signupList" class="nav-item">
                         <a class="nav-link js-scroll-trigger" href="http://localhost:3000/signup">Sign Up</a>
                     </li>
-                    <li class="nav-item">
-                        <a id="login" onclick="login()" class="nav-link js-scroll-trigger">Login</a>
+                    <li id="loginList" class="nav-item" style="cursor: pointer;">
+                        <a id="loginTrig" class="nav-link js-scroll-trigger" >Login</a>
+                    </li> 
+                    <li id="logoutList" class="nav-item" style="cursor: pointer;display: none;">
+                        <a id="logoutTrig" class="nav-link js-scroll-trigger" >Logout</a>
                     </li>
 
                 </ul>
                 <ul class="navbar-nav ml-auto" id="logInput" style="display: none;">
                     <li>
-                        <input id="uname" type="text" placeholder="username">
-                        <input id="password" type="password" placeholder="password">
-                        <button id="sub">Login</button>
+                        <input id="logUname" type="text" placeholder="username">
+                        <input id="logPword" type="password" placeholder="password">
+                        <button id="login" style="cursor: pointer;">Login</button>
+                        <button id="loginCancel" style="cursor: pointer;">Cancel</button>
                     </li>
                 </ul>
-                <script>
-                    function login() {
-                        $('#navOG').fadeOut('medium',function(){
-                            $('#logInput').fadeIn('medium')
-                        })
-                    }
 
-                </script>
             </div>
         </div>
     </nav>
@@ -387,7 +384,7 @@
 
     <!-- Custom scripts for this template -->
     <script src="js/agency.min.js"></script>
-
+    <script src="js/navCookie.js"></script>
 </body>
 
 </html>

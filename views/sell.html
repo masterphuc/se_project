@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Book Exchange</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="css/agency.css" rel="stylesheet">
+    <script src="Scripts/jquery-3.1.1.min.js"></script>
+    <script src="Scripts/jquery.form.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var options = {
+                beforeSubmit: showRequest, // pre-submit callback
+                success: showResponse // post-submit callback
+            };
+
+            // bind to the form's submit event
+            $('#frmUploader').submit(function() {
+                var data = $.trim($("#isbn").val()) + "/" + $.trim($("#author").val()) + "/" + $.trim($("#title").val())
+                $("#frmUploader").attr('action', "list/"+data)
+                
+                $(this).ajaxSubmit(options);
+                // always return false to prevent standard browser submit and page navigation
+                return false;
+            });
+        });
+
+        // pre-submit callback
+        function showRequest(formData, jqForm, options) {
+          
+
+            console.log(formData)
+            console.log(jqForm)
+
+            console.log(options)
+            return true;
+        }
+
+        // post-submit callback
+        function showResponse(responseText, statusText, xhr, $form) {
+
+        }
+
+    </script>
+
+</head>
+
+<body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="http://localhost:3000/">Book Exchange</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul id="navOG" class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#services">Services</a>
+                    </li>
+                    <li id="signupList" class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="http://localhost:3000/signup">Sign Up</a>
+                    </li>
+                    <li id="loginList" class="nav-item" style="cursor: pointer;">
+                        <a id="loginTrig" class="nav-link js-scroll-trigger">Login</a>
+                    </li>
+                    <li id="logoutList" class="nav-item" style="cursor: pointer;display: none;">
+                        <a id="logoutTrig" class="nav-link js-scroll-trigger">Logout</a>
+                    </li>
+
+                </ul>
+                <ul class="navbar-nav ml-auto" id="logInput" style="display: none;">
+                    <li>
+                        <input id="logUname" type="text" placeholder="username">
+                        <input id="logPword" type="password" placeholder="password">
+                        <button id="login" style="cursor: pointer;">Login</button>
+                        <button id="loginCancel" style="cursor: pointer;">Cancel</button>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Book Info</h2>
+                    <!--            <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>-->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form id="frmUploader" enctype="multipart/form-data" action="list" method="post">
+                                <input id="isbn" class="form-control" placeholder="ISBN" type="text">
+                                <input id="author" class="form-control" placeholder="Author" type="text">
+                                <input id="title" class="form-control" placeholder="Title" type="text">
+                                <input id="uploadArea" class="form-control" type="file" name="imgUploader" multiple />
+                                <input class="btn-xl" type="submit" name="submit" id="btnSubmit" value="Sell">
+                            </form>
+
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="copyright">Copyright &copy; Book Exchange</span>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline social-buttons">
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <i class="fa fa-linkedin"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline quicklinks">
+                        <li class="list-inline-item">
+                            <a href="#">Privacy Policy</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">Terms of Use</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript 
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--    <script src="Scripts/jquery.form.min.js"></script>-->
+
+    <!-- Plugin JavaScript 
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Contact form JavaScript 
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Custom scripts for this template 
+    <script src="js/agency.min.js"></script>
+    <script src="js/navCookie.js"></script>
+-->
+    <!--
+
+    <script>
+        $(document).ready(function() {
+            $("#signUpBtn").click(function() {
+                var username = document.getElementById('uname').value
+                var pword = document.getElementById('pword').value
+                var pvword = document.getElementById('pvword').value
+                console.log(username)
+                console.log(pword)
+                if (pword != pvword) {
+                    alert("Your passwords do not match!")
+                } else {
+                    var xmlHttp = new XMLHttpRequest();
+                    xmlHttp.onreadystatechange = function() {
+                        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                            alert("back")
+                            console.log(xmlHttp.responseText)
+                        }
+                    }
+                    console.log("send")
+                    xmlHttp.open("GET", "http://localhost:3000/signup/" + username + "/" + pword + "", true); // true for asynchronous 
+                    xmlHttp.send(null);
+                }
+            })
+
+            var options = {
+                beforeSubmit: showRequest, // pre-submit callback
+                success: showResponse // post-submit callback
+            };
+
+            // bind to the form's submit event
+            $('#frmUploader').submit(function() {
+                $(this).ajaxSubmit(options);
+                // always return false to prevent standard browser submit and page navigation
+                return false;
+            });
+            // pre-submit callback
+            function showRequest(formData, jqForm, options) {
+                alert('Uploading is starting.');
+                return true;
+            }
+
+            // post-submit callback
+            function showResponse(responseText, statusText, xhr, $form) {
+                alert('status: ' + statusText + '\n\nresponseText: \n' + responseText);
+            }
+        });
+
+    </script>
+-->
+
+</body>
+
+</html>
